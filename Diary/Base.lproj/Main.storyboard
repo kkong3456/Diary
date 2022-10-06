@@ -34,13 +34,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="일기장화면" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiY-9F-kTM">
-                                <rect key="frame" x="153" y="400" width="109" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="V7S-xH-sNT">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -85,6 +78,10 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="180" height="200"/>
+                                        <connections>
+                                            <outlet property="dateLabel" destination="QpV-wx-O2Z" id="w7Z-1O-ts2"/>
+                                            <outlet property="titleLabel" destination="l8X-jR-14v" id="pRt-J0-Whu"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -105,6 +102,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="V7S-xH-sNT" id="uG3-ri-oHf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -184,8 +184,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="일기작성" id="gib-gZ-L9F">
-                        <barButtonItem key="rightBarButtonItem" title="등록" id="atD-92-9dK"/>
+                        <barButtonItem key="rightBarButtonItem" title="등록" id="atD-92-9dK">
+                            <connections>
+                                <action selector="tapConformButton:" destination="eyo-IO-7zH" id="Rn0-QV-gHi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="confirmButton" destination="atD-92-9dK" id="lYB-EY-2ok"/>
+                        <outlet property="contentsTextView" destination="Oli-rc-aGy" id="94n-Qa-Jvs"/>
+                        <outlet property="dateTextField" destination="215-Tx-XuW" id="j15-R3-wH5"/>
+                        <outlet property="titleTextField" destination="UmF-c2-StR" id="OhD-Ar-R9m"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ekB-4l-MNz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
