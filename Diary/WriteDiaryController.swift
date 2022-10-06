@@ -21,6 +21,8 @@ class WriteDiaryController: UIViewController {
     super.viewDidLoad()
     self.configureContentsTextView()
     self.configureDatePicker()
+    self.configureInputField()
+    self.confirmButton.isEnabled=false
   }
   
   private func configureContentsTextView(){
@@ -36,6 +38,11 @@ class WriteDiaryController: UIViewController {
     self.datePicker.locale=Locale(identifier: "ko-KR")
     self.dateTextField.inputView=self.datePicker
   }
+  private func configureInputField(){
+    self.contentsTextView.delegate=self
+    self.titleTextField.addTarget(self, action: #selector(titleTextFieldDidChange(_:)), for: .editingChanged)
+    self.dateTextField.addTarget(self, action: #selector(dateTextFieldDidChange(_:)), for: .editingChanged)
+  }
   @IBAction func tapConformButton(_ sender: UIBarButtonItem) {
 
   }
@@ -45,6 +52,30 @@ class WriteDiaryController: UIViewController {
     formmter.locale=Locale(identifier: "ko_KR")
     self.diaryDate=datePicker.date
     self.dateTextField.text=formmter.string(from: datePicker.date)
+    self.dateTextField.sendActions(for: .editingChanged)
   }
   
+  @objc private func titleTextFieldDidChange(_ textField:UITextField){
+    self.validateInputField()
+  }
+  
+  @objc private func dateTextFieldDidChange(_ textField:UITextField){
+    self.validateInputField()
+  }
+  
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.view.endEditing(true)
+  }
+  
+  private func validateInputField(){
+    self.confirmButton.isEnabled = !(self.titleTextField.text?.isEmpty ??  true) &&
+      !(self.dateTextField.text?.isEmpty ?? true) && !self.contentsTextView.text.isEmpty
+  }
+  
+}
+
+extension WriteDiaryController:UITextViewDelegate{
+  func textViewDidChange(_ textView:UITextView){
+    self.validateInputField()
+  }
 }
