@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol WriteDiaryViewDelegate:AnyObject{
+  func didSelectRegister(diary:Diary)
+}
+
 class WriteDiaryController: UIViewController {
 
   @IBOutlet weak var titleTextField: UITextField!
@@ -16,6 +20,7 @@ class WriteDiaryController: UIViewController {
   
   private let datePicker=UIDatePicker()
   private var diaryDate:Date?
+  weak var delegate:WriteDiaryViewDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -44,7 +49,12 @@ class WriteDiaryController: UIViewController {
     self.dateTextField.addTarget(self, action: #selector(dateTextFieldDidChange(_:)), for: .editingChanged)
   }
   @IBAction func tapConformButton(_ sender: UIBarButtonItem) {
-
+    guard let title=self.titleTextField.text else {return}
+    guard let contents=self.contentsTextView.text else {return}
+    guard let date=self.diaryDate else {return}
+    let diary=Diary(title: title, contents: contents, date: date, isStar: false)
+    self.delegate?.didSelectRegister(diary: diary)
+    self.navigationController?.popViewController(animated: true)
   }
   @objc private func datePickerValueDidChange(_ datePicker:UIDatePicker){
     let formmter=DateFormatter()
